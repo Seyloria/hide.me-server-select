@@ -41,7 +41,6 @@ curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/a
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/serverlist.csv
 ```
 <br/>
-<br/>
 
 Make sure the script files are executable by setting the chmod permissions:
 ```sh
@@ -52,13 +51,13 @@ chmod +x vpnautostart.sh
 <br/>
 <br/>
 
-If you want the exlude an ip range that is not routed via the VPN connection
+**If you want to exlude an ip range** that should not routed via the VPN connection
 (typically our own LAN or another VPN mesh network like tailscale) then edit the this variable
 > EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 at the top of both **vpnselect.sh** and **vpnautostart.sh**.
 <br/>
 <br/>
-<br/>
+
 Changing the VPN connection via the hide.me CLI client requires sudo privileges.
 To make this script work, either the CLI client or the scripts itself need to be added to the sudoers file.
 Type 'sudo visudo' and add the following line somewhere near the end of the file:
@@ -88,7 +87,7 @@ Here is a basic way as an example:
 > Afterwards add the **vpnautostart.sh** to your systems autostart.
 <br/>
 <br/>
-<br/>
+
 ## Changelog and current state (dd-mm-yyyy)
 
 - [☑️] 03-08-2025 | v1.2 | Basic Autostart Script added.
