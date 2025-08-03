@@ -46,13 +46,11 @@ chmod +x vpnselect-autostartserver.sh
 chmod +x vpnautostart.sh
 ```
 <br/>
-<br/>
 
 **If you want to exlude an ip range** that should not routed via the VPN connection
 (typically our own LAN or another VPN mesh network like tailscale) then edit the this variable
 > EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 at the top of both **vpnselect.sh** and **vpnautostart.sh**.
-<br/>
 <br/>
 
 Changing the VPN connection via the hide.me CLI client requires sudo privileges.
@@ -65,7 +63,6 @@ sudo visudo
 your_username ALL=(ALL:ALL) NOPASSWD: /opt/hide.me/hide.me
 ```
 Be careful to not mess up this file, otherwhise you might brick your user permissions!
-<br/>
 <br/>
 
 ## Optional Settings
