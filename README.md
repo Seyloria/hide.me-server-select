@@ -67,6 +67,7 @@ Be careful to not mess up this file, otherwhise you might brick your user permis
 <br/>
 
 ## Optional Settings
+### Autostart
 Additionally you can add the following line to your .bashrc, .zshrc or config.fish:
 ```sh
 alias vpn="~/path-to-your-script-inside_your_home_directory/vpnselect.sh"
@@ -76,6 +77,7 @@ Afterwards you can open up the script by simply typing "vpn"(or to whatever you 
 <br/>
 <br/>
 
+### Exlude IP Range
 You may wish to set up a VPN connection when you start up your system.
 There are multiple ways to achieve this, depending on your distribution and/or desktop environment.
 Here is a basic way as an example:
