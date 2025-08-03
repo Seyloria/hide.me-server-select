@@ -57,7 +57,7 @@ at the top of both **vpnselect.sh** and **vpnautostart.sh**.
 ### Making script executable without manual sudo escalation
 Changing the VPN connection via the hide.me CLI client requires sudo privileges.
 To make this script work, either the CLI client or the scripts itself need to be added to the sudoers file.
-Type 'sudo visudo' and add the following line somewhere near the end of the file:
+Type 'sudo visudo' and add the following line somewhere near the end of the file(edit your username!):
 ```
 sudo visudo
 ```
