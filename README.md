@@ -9,11 +9,14 @@
    ┗━┓┣╸ ┣┳┛┃┏┛┣╸ ┣┳┛   ┗━┓┣╸ ┃  ┣╸ ┃   ┃              
    ┗━┛┗━╸╹┗╸┗┛ ┗━╸╹┗╸   ┗━┛┗━╸┗━╸┗━╸┗━╸ ╹
 ```
- 
+<br/>
+<br/>
 
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
 There is no need for systemd as it only uses the basic hide.me CLI client, which makes it possible to run on any distro the client itself is compatible with.
-
+<br/>
+<br/>
+<br/>
 
 ![Showcase](/showcase.gif)
 
@@ -23,8 +26,9 @@ The following dependencies are needed. They are both quite small and are basical
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
 - Optional: A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
-
-
+<br/>
+<br/>
+<br/>
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
 
@@ -37,19 +41,22 @@ curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/v
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/autostart-server.txt
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/serverlist.csv
 ```
-
+<br/>
+<br/>
+<br/>
 Make sure the script files are executable by setting the chmod permissions:
 ```sh
 chmod +x vpnselect.sh
 chmod +x vpnselect-autostartserver.sh
 chmod +x vpnautostart.sh
 ```
-
+<br/>
+<br/>
+<br/>
 If you want the exlude an ip range that is not routed via the VPN connection
 (typically our own LAN or another VPN mesh network like tailscale) then edit the this variable
 > EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 at the top of both **vpnselect.sh** and **vpnautostart.sh**.
-<br/>
 <br/>
 <br/>
 <br/>
@@ -72,20 +79,24 @@ alias vpn="~/path-to-your-script-inside_your_home_directory/vpnselect.sh"
 ```
 This will create an alias with the name "vpn"(edit it to your liking), you just have to customize the path to where you saved the script.
 Afterwards you can open up the script by simply typing "vpn"(or to whatever you set the alias) into your terminal.
-
-
+<br/>
+<br/>
+<br/>
 You may wish to set up a VPN connection when you start up your system.
 There are multiple ways to achieve this, depending on your distribution and/or desktop environment.
 Here is a basic way as an example:
-
 > Run the **vpnselect-autostartserver.sh** script to show the current Autostart VPN Server and choose a new one.
 > Afterwards add the **vpnautostart.sh** to your systems autostart.
-
+<br/>
+<br/>
+<br/>
 ## Changelog and current state (dd-mm-yyyy)
 
 - [☑️] 03-08-2025 | v1.2 | Basic Autostart Script added.
 - [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
-
+<br/>
+<br/>
+<br/>
 ---
 ### Disclamer
 
