@@ -15,6 +15,9 @@ This small linux bash script lets you easily switch the hide.me VPN Server by ma
 There is no need for systemd as it only uses the basic hide.me CLI client, which makes it possible to run on any distro the client itself is compatible with.
 
 
+![Showcase](/showcase.gif)
+
+
 ## Dependencies
 The following dependencies are needed. They are both quite small and are basically available on nearly all distributions.
 - [GNU Screen](https://www.gnu.org/software/screen/)
