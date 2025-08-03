@@ -20,7 +20,6 @@ There is no need for systemd as it only uses the basic hide.me CLI client, which
 
 ![Showcase](/showcase.gif)
 
-
 ## Dependencies
 The following dependencies are needed. They are both quite small and are basically available on nearly all distributions.
 - [GNU Screen](https://www.gnu.org/software/screen/)
@@ -28,7 +27,7 @@ The following dependencies are needed. They are both quite small and are basical
 - Optional: A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
 <br/>
 <br/>
-<br/>
+
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
 
@@ -43,7 +42,7 @@ curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/s
 ```
 <br/>
 <br/>
-<br/>
+
 Make sure the script files are executable by setting the chmod permissions:
 ```sh
 chmod +x vpnselect.sh
@@ -52,7 +51,7 @@ chmod +x vpnautostart.sh
 ```
 <br/>
 <br/>
-<br/>
+
 If you want the exlude an ip range that is not routed via the VPN connection
 (typically our own LAN or another VPN mesh network like tailscale) then edit the this variable
 > EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
@@ -81,7 +80,7 @@ This will create an alias with the name "vpn"(edit it to your liking), you just 
 Afterwards you can open up the script by simply typing "vpn"(or to whatever you set the alias) into your terminal.
 <br/>
 <br/>
-<br/>
+
 You may wish to set up a VPN connection when you start up your system.
 There are multiple ways to achieve this, depending on your distribution and/or desktop environment.
 Here is a basic way as an example:
@@ -96,7 +95,7 @@ Here is a basic way as an example:
 - [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
 <br/>
 <br/>
-<br/>
+
 ---
 ### Disclamer
 
