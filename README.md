@@ -1,7 +1,7 @@
 # hide.me-server-select
 
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
-There is no need for the systemd.
+There is no need for systemd.
 
 ## Dependencies
 The following dependencies are needed, both quite small and basically available on nearly all distros
