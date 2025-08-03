@@ -27,8 +27,8 @@ chmod +x vpnselect.sh
 ```
 
 
-The switching via the hide.me CLI client need sudo privileges.
-In order do make this script work the CLI client needs to be added to the sudoers file.
+The changing the vpn connection via the hide.me CLI client need sudo privileges.
+In order do make this script work the CLI client or this script needs to be added to the sudoers file.
 Type sudo visudo and at the following line near the somewhere near the end of the file.
 Be careful to not mess up this file, otherwhise you might brick your user permissions!
 ```
