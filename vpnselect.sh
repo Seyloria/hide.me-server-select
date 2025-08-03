@@ -7,6 +7,7 @@
 EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 #---------------- EDIT THIS - END ------------------
 
+# Gets the directories the script and csv is saved at
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 SERVERSCSV="$SCRIPT_DIR/serverlist.csv"
 
@@ -50,10 +51,12 @@ bg=(
 # Text attributes
 bold="$(tput bold)"
 reset="$(tput sgr0)"
+uline="$(tput smul)"
+uliner="$(tput rmul)"
 
-trap 'echo -e "${bold}${fg[red]}⚕️ Info:Connection closed by user. Exiting...${reset}\n"; exit 130' INT
+trap 'echo -e "${bold}${fg[red]}⚕️ Info: Script closed by user. Exiting...${reset}\n"; exit 130' INT
 
-#Info Greetings
+#Info Greeting
 greeting=$(cat <<'EOF'
 
                                                        
@@ -70,23 +73,24 @@ greeting=$(cat <<'EOF'
 EOF
 )
 echo -e "${bold}${fg[white]}${bg[magenta]}$greeting${reset}"
-echo -e "${bold}${fg[magenta]}\nwritten by Seyloria | Version 1.0 | https://github.com/Seyloria/hide.me-vpn-switch\n${reset}"
+echo -e "${bold}${fg[magenta]}\nwritten by Seyloria | Version 1.2 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
 
-
+# Declares the screen session name 
 SESSION_NAME="vpn_connection"
 # Check if the screen session exists
 if screen -list | grep -q "\.${SESSION_NAME}"; then
-    echo -e "${bold}${fg[green]}⚕️ Info: Running detached VPN connection session found! Attaching to running screen session '$SESSION_NAME'...\n${reset}"
-    sleep 3
+    echo -e "${bold}${fg[green]}⚕️ INFO:${fg[white]} Running detached VPN connection session detected! Attaching to running screen session '$SESSION_NAME'...\n${reset}"
+    echo -e "${bold}${fg[white]}         To get back out of the session screen again press ${fg[red]}Ctrl+A + D${reset}"
+    echo -e "${bold}${fg[white]}         To kill the current VPN connection press ${fg[red]}Ctrl+C\n${reset}"
+    sleep 5
     screen -r "$SESSION_NAME"
 else
-    echo -e "${bold}${fg[white]}⚕️ Info: No running VPN connection in detached session named '$SESSION_NAME' found.${reset}\n"
+    echo -e "${bold}${fg[white]}⚕️${fg[magenta]} INFO:${fg[white]} No running VPN connection in detached session named '$SESSION_NAME' found.${reset}\n"
 fi
 
 # Arrays to store the csv data
 servernames=()
 domains=()
-
 # Reads each line in the csv and saves the servernames and domains into arrays
 while IFS=";" read -r servername domain; do
     servernames+=("$servername")
@@ -95,7 +99,7 @@ done < "$SERVERSCSV"
 
 # Lets the user select the server(first column) from the serverlist.csv
 fzfselect=$(cut -d';' -f1 $SERVERSCSV | fzf \
-    --color=header:green,prompt:green,fg+:magenta:bold \
+    --color="header:green,prompt:green,fg+:magenta:bold" \
     --header="Please select a VPN server" \
     --prompt="Filter ⧐ " \
     --height=40% \
@@ -107,25 +111,28 @@ if [ -n "$fzfselect" ]; then
     # Extract the second column of the matching row - the corresponding domain
     seldomain=$(awk -F';' -v servername="$fzfselect" '$1 == servername { print $2 }' $SERVERSCSV)
     
-    echo "Selected Server: $fzfselect"
-    echo "Server Domain:   $seldomain"
+    echo -e "${bold}${fg[magenta]}󰒒 Selected Server:${fg[white]} $fzfselect${reset}"
+    echo -e "${bold}${fg[magenta]}󰇗 Server Domain:${fg[white]}   $seldomain${reset}"
 else
     echo "No selection made. Aborted..."
     exit 1
 fi
 
-connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s \"$EXC_IP_RANGE\" connect \"$seldomain\""
-
+# 
+#connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s \"$EXC_IP_RANGE\" connect \"$seldomain\""
+connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s '$EXC_IP_RANGE' connect '$seldomain'"
 if screen -list | grep -q "\.${SESSION_NAME}"; then
-    echo -e "${bold}${fg[green]}⚕️ Info: Running detached VPN connection session found! Attaching to running screen session '$SESSION_NAME'...${reset}"
-    sleep 3
+    echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} Running detached VPN connection session detected! Attaching to running screen session '$SESSION_NAME'...\n${reset}"
+    echo -e "${bold}${fg[white]}         To get back out of the session screen again press ${fg[red]}Ctrl+A + D${reset}"
+    echo -e "${bold}${fg[white]}         To kill the current VPN connection press ${fg[red]}Ctrl+C\n${reset}"
+    sleep 5
     screen -r "$SESSION_NAME"
 else
     truncate -s 0 "$SCRIPT_DIR/recent_vpn_con.log"
-    screen -dmS vpn_connection bash -c "$connection"
-    screen -S vpn_connection -X logfile "$SCRIPT_DIR/recent_vpn_con.log"
-    screen -S vpn_connection -X log on
-    echo -e "${bold}${fg[white]}\n⚕️ END: Establishing connection to server '$fzfselect'\nDetached screen session with the name 'vpn_connection' will be running in the background.\nTo watch the output just rerun this script.\nYou may close the terminal now!\n${reset}"
+    screen -dmS $SESSION_NAME bash -c "$connection"
+    screen -S $SESSION_NAME -X logfile "$SCRIPT_DIR/recent_vpn_con.log"
+    screen -S $SESSION_NAME -X log on
+    echo -e "${bold}\n⚕️${fg[green]} INFO:${fg[white]} Establishing connection to server '$fzfselect'\n\nDetached screen session with the name 'vpn_connection' will be running in the background.\nTo view the output, simply rerun the script.\nIt's save to close the terminal now!\n${reset}"
     echo -e "${bold}${fg[green]}Bye... (｡◕‿‿◕｡)${reset}\n"
     sleep 3
 fi
