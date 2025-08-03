@@ -70,16 +70,16 @@ Afterwards you can open up the script by simply typing "vpn" into your terminal.
 You may wish to set up a VPN connection when you start up your system.
 There are multiple ways to achieve this, depending on your distribution and/or desktop environment.
 Here is a basic way as an example:
-```sh
-Run the **vpnselect-autostartserver.sh** script to choose a new autostart vpn server.
-Afterwards add the **vpnautostart.sh** to your systems autostart.
-```
+
+> Run the **vpnselect-autostartserver.sh** script to choose a new autostart vpn server.
+> Afterwards add the **vpnautostart.sh** to your systems autostart.
 
 ## Changelog and current state (dd-mm-yyyy)
 
 - [☑️] 03-08-2025 | v1.2 | Basic Autostart Script added.
 - [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
 
+---
 ### Disclamer
 
 This is a private project and i am not a dev, nor am i Hide.me related in any form.
