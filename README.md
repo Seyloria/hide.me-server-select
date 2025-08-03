@@ -68,7 +68,8 @@ sudo visudo
 your_username ALL=(ALL:ALL) NOPASSWD: /opt/hide.me/hide.me
 ```
 Be careful to not mess up this file, otherwhise you might brick your user permissions!
-
+<br/>
+<br/>
 
 ## Optional Settings
 Additionally you can add the following line to your .bashrc, .zshrc or config.fish:
@@ -85,7 +86,6 @@ There are multiple ways to achieve this, depending on your distribution and/or d
 Here is a basic way as an example:
 > Run the **vpnselect-autostartserver.sh** script to show the current Autostart VPN Server and choose a new one.
 > Afterwards add the **vpnautostart.sh** to your systems autostart.
-<br/>
 <br/>
 
 ## Changelog and current state (dd-mm-yyyy)
