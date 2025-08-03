@@ -5,8 +5,8 @@ There is no need for systemd.
 
 ## Dependencies
 The following dependencies are needed, both quite small and basically available on nearly all distros
-- screen
-- fzf
+- [GNU Screen](https://www.gnu.org/software/screen/)
+- [fzf](https://github.com/junegunn/fzf)
 
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
