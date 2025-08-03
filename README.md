@@ -10,13 +10,11 @@
    ┗━┛┗━╸╹┗╸┗┛ ┗━╸╹┗╸   ┗━┛┗━╸┗━╸┗━╸┗━╸ ╹
 ```
 <br/>
-<br/>
 
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
 There is no need for systemd as it only uses the basic hide.me CLI client, which makes it possible to run on any distro the client itself is compatible with.
 <br/>
-<br/>
-<br/>
+
 
 ![Showcase](/showcase.gif)
 
@@ -25,7 +23,6 @@ The following dependencies are needed. They are both quite small and are basical
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
 - Optional: A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
-<br/>
 <br/>
 
 ## Installation
