@@ -1,12 +1,24 @@
-# hide.me-server-select
+# Hide.me Server Select
+
+   ██╗  ██╗██╗██████╗ ███████╗   ███╗   ███╗███████╗   
+   ██║  ██║██║██╔══██╗██╔════╝   ████╗ ████║██╔════╝   
+   ███████║██║██║  ██║█████╗     ██╔████╔██║█████╗     
+   ██╔══██║██║██║  ██║██╔══╝     ██║╚██╔╝██║██╔══╝     
+   ██║  ██║██║██████╔╝███████╗██╗██║ ╚═╝ ██║███████╗   
+   ╚═╝  ╚═╝╚═╝╚═════╝ ╚══════╝╚═╝╚═╝     ╚═╝╚══════╝   
+   ┏━┓┏━╸┏━┓╻ ╻┏━╸┏━┓   ┏━┓┏━╸╻  ┏━╸┏━╸╺┳╸             
+   ┗━┓┣╸ ┣┳┛┃┏┛┣╸ ┣┳┛   ┗━┓┣╸ ┃  ┣╸ ┃   ┃              
+   ┗━┛┗━╸╹┗╸┗┛ ┗━╸╹┗╸   ┗━┛┗━╸┗━╸┗━╸┗━╸ ╹              
 
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
 There is no need for systemd.
+
 
 ## Dependencies
 The following dependencies are needed, both quite small and basically available on nearly all distros
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
+
 
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
@@ -54,9 +66,9 @@ Here is a basic example:
 Info comming soon...
 ```
 
-## Changelog and current state
+## Changelog and current state (dd-mm-yyyy)
 
-- [☑️] 18-04-2024 | v1.0 | Basic showcase version. Basic funtionality done
+- [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic funtionality done.
 
 ### Disclamer
 
