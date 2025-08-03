@@ -12,22 +12,21 @@
  
 
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
-There is no need for systemd.
+There is no need for systemd as it only uses the basic hide.me CLI, which makes it possible to run on any distro the client itself is compatible with.
 
 
 ## Dependencies
-The following dependencies are needed, both quite small and basically available on nearly all distros
+The following dependencies are needed. They are both quite small and are basically available on nearly all distributions.
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
+- A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
 
 
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
 
-
 Open a terminal and navigate to where you want to store the script **and** serverlist.csv(~/vpn-select/ =  your home directory for example).
 Then copy the following code into your terminal to download both files:
-
 ```sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/serverlist.csv
@@ -39,9 +38,9 @@ chmod +x vpnselect.sh
 ```
 
 
-The changing the vpn connection via the hide.me CLI client need sudo privileges.
-In order do make this script work the CLI client or this script needs to be added to the sudoers file.
-Type sudo visudo and at the following line somewhere near the end of the file.
+Changing the VPN connection via the hide.me CLI client requires sudo privileges.
+To make this script work, either the CLI client or the script itself needs to be added to the sudoers file.
+Type 'sudo visudo' and add the following line somewhere near the end of the file:
 ```
 sudo visudo
 ```
@@ -60,16 +59,16 @@ This will create an alias with the name "vpn"(edit it to the name you like), you
 Afterwards you can open up the script by simply typing "vpn" into your terminal.
 
 
-You may want to esteblish a vpn connection on system startup.
-This can be achived in several ways depending on your distro and/or DE.
-Here is a basic example:
+You may wish to set up a VPN connection when you start up your system.
+There are multiple ways to achieve this, depending on your distribution and/or desktop environment.
+Here is a basic way as an example:
 ```sh
 Info comming soon...
 ```
 
 ## Changelog and current state (dd-mm-yyyy)
 
-- [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic funtionality done.
+- [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
 
 ### Disclamer
 
