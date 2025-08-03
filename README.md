@@ -11,6 +11,7 @@ The following dependencies are needed, both quite small and basically available 
 ## Installation
 Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) as described.
 
+
 Open a terminal and navigate to where you want to store the script **and** serverlist.csv(~/vpn-select/ =  your home directory for example).
 Then copy the following code into your terminal to download both files:
 
@@ -24,6 +25,17 @@ Make sure the script is executable by setting the chmod permissions:
 ```sh
 chmod +x vpnselect.sh
 ```
+
+
+The switching via the hide.me CLI client need sudo privileges.
+In order do make this script work the CLI client needs to be added to the sudoers file.
+Type sudo visudo and at the following line near the somewhere near the end of the file.
+Be careful to not mess up this file, otherwhise you might brick your user permissions!
+```
+sudo visudo
+your_username ALL=(ALL:ALL) NOPASSWD: /opt/hide.me/hide.me
+```
+
 
 ## Optional Settings
 Additionally you can add the following line to your .bashrc, .zshrc or config.fish:
