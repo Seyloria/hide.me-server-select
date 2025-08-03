@@ -17,7 +17,6 @@ Then copy the following code into your terminal to download both files:
 
 ```sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect.sh
-curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect-autostart.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/serverlist.csv
 ```
 
@@ -29,12 +28,14 @@ chmod +x vpnselect.sh
 
 The changing the vpn connection via the hide.me CLI client need sudo privileges.
 In order do make this script work the CLI client or this script needs to be added to the sudoers file.
-Type sudo visudo and at the following line near the somewhere near the end of the file.
-Be careful to not mess up this file, otherwhise you might brick your user permissions!
+Type sudo visudo and at the following line somewhere near the end of the file.
 ```
 sudo visudo
+```
+```
 your_username ALL=(ALL:ALL) NOPASSWD: /opt/hide.me/hide.me
 ```
+Be careful to not mess up this file, otherwhise you might brick your user permissions!
 
 
 ## Optional Settings
