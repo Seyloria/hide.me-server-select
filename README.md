@@ -19,7 +19,7 @@ There is no need for systemd as it only uses the basic hide.me CLI client, which
 The following dependencies are needed. They are both quite small and are basically available on nearly all distributions.
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
-- A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
+- Optional: A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
 
 
 ## Installation
