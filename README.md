@@ -14,9 +14,15 @@
 This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
 There is no need for systemd as it only uses the basic hide.me CLI client, which makes it possible to run on any distro the client itself is compatible with.
 <br/>
+<br/>
 
+## :beginner: Features & How It Works
+Thx to [fzf](https://github.com/junegunn/fzf) you get a pretty and filterable list of all the hide.me servers to choose from. With the help of [GNU Screen](https://www.gnu.org/software/screen/), the script can run in the background without the need for an open terminal.
+<br/>
 
 ![Showcase](/showcase.gif)
+<br/>
+<br/>
 
 ## :dna: Dependencies
 In addition to the [official Hide.me client](https://github.com/eventure/hide.client.linux) you only need two small and common tools, both of which are available in practically any distro.
@@ -54,10 +60,10 @@ Edit the this variable at the top of the **<ins>config.sh</ins>**
 > EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 <br/>
 
-### :key: Making the script executable without manual sudo escalation
-Changing the VPN connection via the hide.me CLI client requires sudo privileges.
-To make this script work, the CLI client needs to be added to the sudoers file with the NOPASSWD option.
-Type 'sudo visudo' and add the following line somewhere near the end of the file(edit your username!):
+### :key: Making the script work without manual sudo escalation
+Changing the VPN connection via the hide.me CLI Client requires sudo privileges.
+Therefor, the CLI Client needs to be added to the sudoers file with the NOPASSWD option.
+Type **'sudo visudo'** and add the following line somewhere near the end of the file(don't forget to replace your username!):
 ```
 sudo visudo
 ```
