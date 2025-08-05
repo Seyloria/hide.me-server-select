@@ -98,7 +98,7 @@ Here is a basic way as an example:
 
 ## :construction: In the works
 - Atm the hide.me CLI client sometimese fails to to write back the resolv.conf on session logout(system restart). Goal is to run the established connection screen session from a seperate script that traps the session logout.
-- if you got any wishes or idea, let me know! 
+- If you have any wishes or ideas, please let me know!
 <br/>
 
 ---
