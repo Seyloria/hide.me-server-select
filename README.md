@@ -19,7 +19,7 @@ There is no need for systemd as it only uses the basic hide.me CLI client, which
 ![Showcase](/showcase.gif)
 
 ## :dna: Dependencies
-In addition to the [official Hide.me client](https://github.com/eventure/hide.client.linux) you only need two small and common tools, both of which are quite small and available on basically every distro.
+In addition to the [official Hide.me client](https://github.com/eventure/hide.client.linux) you only need two small and common tools, both of which are available in practically any distro.
 - [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux)
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
