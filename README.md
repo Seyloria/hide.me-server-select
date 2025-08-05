@@ -97,6 +97,7 @@ Here is a basic way as an example:
 
 ## :scroll: Changelog and current state (dd-mm-yyyy)
 
+- [x] 05-08-2025 | v2.2 | Basic Autostart works. Tested only on GNOME so far
 - [x] 05-08-2025 | v2.0 | Major rewrite to incorporate a config file
 - [x] 03-08-2025 | v1.2 | Basic Autostart Script added.
 - [x] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
@@ -108,6 +109,6 @@ Here is a basic way as an example:
 <br/>
 
 ---
-### Disclamer
+### :octopus: Disclamer
 
 > **This is a private project and I am neither a developer nor affiliated with Hide.me in any way. I am only sharing this because it might help others. If you want to fork it, go ahead! If you find any errors or got suggestions, please let me know!**
