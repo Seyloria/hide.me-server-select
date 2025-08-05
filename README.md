@@ -92,6 +92,7 @@ There are multiple ways to achieve this, depending on your distro and/or desktop
 Here is a basic way as an example:
 > Add the **vpnautostart.sh** to your systems autostart
 > Run the **vpnselect-autostartserver.sh**(In your script folder type ./vpnselect-autostartserver.sh) and choose a new Autostart VPN Server.
+An example desktop entry for GNOME can be found in the **Autostart** directory.
 <br/>
 <br/>
 
