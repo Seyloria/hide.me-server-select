@@ -90,8 +90,9 @@ Here is a basic way as an example:
 
 ## Changelog and current state (dd-mm-yyyy)
 
-- [☑️] 03-08-2025 | v1.2 | Basic Autostart Script added.
-- [☑️] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
+- [x] 03-08-2025 | v2.0 | Major rewrite to incorporate a config file
+- [x] 03-08-2025 | v1.2 | Basic Autostart Script added.
+- [x] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
 <br/>
 
 ---
