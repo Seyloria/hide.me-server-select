@@ -11,9 +11,9 @@ else
     source $SCRIPT_DIR/config.sh
 fi
 
-read AUTOSTART_SERVER_DOMAIN < <(sed -n '2p' $AUTOSTARTTXT)
-
 execdir
+
+read AUTOSTART_SERVER_DOMAIN < <(sed -n '2p' $AUTOSTARTTXT)
 
 # Defines the connection string
 autostart_connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s '$EXC_IP_RANGE' connect '$AUTOSTART_SERVER_DOMAIN'"
