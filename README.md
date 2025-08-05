@@ -90,9 +90,13 @@ Here is a basic way as an example:
 
 ## Changelog and current state (dd-mm-yyyy)
 
-- [x] 03-08-2025 | v2.0 | Major rewrite to incorporate a config file
+- [x] 05-08-2025 | v2.0 | Major rewrite to incorporate a config file
 - [x] 03-08-2025 | v1.2 | Basic Autostart Script added.
 - [x] 03-08-2025 | v1.0 | Basic showcase version. Basic functionality done.
+<br/>
+
+## In the works
+- Atm the hide.me CLI client sometimese fails to to write back the resolv.conf on session logout(system restart). Goal is to run the established connection screen session from a seperate script that traps the session logout.
 <br/>
 
 ---
