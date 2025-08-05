@@ -54,7 +54,7 @@ Edit the this variable at the top of the **<ins>config.sh</ins>**
 > EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 <br/>
 
-### :key: Making script executable without manual sudo escalation
+### :key: Making the script executable without manual sudo escalation
 Changing the VPN connection via the hide.me CLI client requires sudo privileges.
 To make this script work, the CLI client needs to be added to the sudoers file with the NOPASSWD option.
 Type 'sudo visudo' and add the following line somewhere near the end of the file(edit your username!):
