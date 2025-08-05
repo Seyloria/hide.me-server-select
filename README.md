@@ -31,6 +31,7 @@ Install the [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.
 Open a terminal and navigate to where you want to store the script files(~/vpn-select/ =  your home directory would be suitable for example).
 Then copy the following code into your terminal to download the needed files:
 ```sh
+curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/config.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect-autostartserver.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnautostart.sh
@@ -39,7 +40,7 @@ curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/s
 ```
 <br/>
 
-Make sure the script files are executable by setting the chmod permissions:
+Make sure the following script files are executable by setting the chmod permissions:
 ```sh
 chmod +x vpnselect.sh
 chmod +x vpnselect-autostartserver.sh
