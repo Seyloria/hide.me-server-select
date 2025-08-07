@@ -204,11 +204,6 @@ check_required_files() {
     missing=1
   fi
 
-  if [[ ! -f "$AUTOSTARTSH" ]]; then
-    echo -e "${bold}${fg[red]}❌ Error:${reset}${bold}${fg[white]} No vpn_autostart.sh found! Expected path: $AUTOSTARTSH${reset}"
-    missing=1
-  fi
-
   if [[ ! -f "$VPNCONNECTOR" ]]; then
     echo -e "${bold}${fg[red]}❌ Error:${reset}${bold}${fg[white]} No vpn_connector.sh found! Expected path: $VPNCONNECTOR${reset}"
     missing=1
