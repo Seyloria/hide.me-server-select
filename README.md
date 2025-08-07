@@ -37,19 +37,16 @@ Open a terminal and navigate to where you want to store the script files(Example
 Then copy the following curl download url's into your terminal and hit enter:
 ```sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/config.sh
-curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect.sh
-curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnselect-autostartserver.sh
-curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpnautostart.sh
-curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/autostart-server.txt
+curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpn_select.sh
+curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpn_connector.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/serverlist.csv
 ```
 <br/>
 
 Make sure the following script files are executable by setting the chmod permissions:
 ```sh
-chmod +x vpnselect.sh
-chmod +x vpnselect-autostartserver.sh
-chmod +x vpnautostart.sh
+chmod +x vpn_select.sh
+chmod +x vpn_connector.sh
 ```
 <br/>
 
@@ -79,7 +76,7 @@ your_username ALL=(ALL:ALL) NOPASSWD: /opt/hide.me/hide.me
 ### Shortcut via alias
 Additionally you can add the following line to your .bashrc, .zshrc or config.fish:
 ```sh
-alias vpn="~/path-to-your-script-inside_your_home_directory/vpnselect.sh"
+alias vpn="~/path-to-your-script-inside_your_home_directory/vpn_select.sh"
 ```
 This will create an alias with the name "vpn"(edit it to your liking), just customize the path to where you saved the script.
 Afterwards you can call the script by simply typing "vpn" into your terminal, no matter in which directory you currently are.
@@ -90,14 +87,14 @@ Afterwards you can call the script by simply typing "vpn" into your terminal, no
 You may wish to set up a VPN connection when starting up your system.
 There are multiple ways to achieve this, depending on your distro and/or desktop environment.
 Here is a basic way as an example:
-> Add the **vpnautostart.sh** to your systems autostart
-> Run the **vpnselect-autostartserver.sh**(In your script folder type ./vpnselect-autostartserver.sh) and choose a new Autostart VPN Server.
-An example desktop entry for GNOME can be found in the [Autostart directory](/Autostart/).
+> Run the **vpn_select.sh** with the **--autostart** flag and choose a new Autostart VPN Server.
+> To invoke the correct startup behavior the **vpn_select.sh** is launched with the **--syslaunch** flag. An example desktop entry for GNOME can be found in the [Autostart directory](/Autostart/).
 <br/>
 <br/>
 
 ## :scroll: Changelog and current state (dd-mm-yyyy)
 
+- [x] 07-08-2025 | v2.5 | Another Major rewrite to incorporate less files and make autostart more reliable.
 - [x] 05-08-2025 | v2.2 | Basic Autostart works. Tested only on GNOME so far
 - [x] 05-08-2025 | v2.0 | Major rewrite to incorporate a config file
 - [x] 03-08-2025 | v1.2 | Basic Autostart Script added.
