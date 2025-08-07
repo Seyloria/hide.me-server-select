@@ -8,11 +8,12 @@ export EXC_IP_RANGE="192.168.55.0/24,100.64.0.0/10"
 # Global static variables
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 SERVERSCSV="$SCRIPT_DIR/serverlist.csv"
-SESSION_NAME="vpn_connection"
 AUTOSTARTTXT="$SCRIPT_DIR/autostart-server.txt"
-AUTOSTARTSH="$SCRIPT_DIR/vpnautostart.sh"
+AUTOSTARTSH="$SCRIPT_DIR/vpn_autostart.sh"
+VPNCONNECTOR="$SCRIPT_DIR/vpn_connector.sh"
 AUTOSTART_SERVER=""
 AUTOSTART_SERVER_DOMAIN=""
+SESSION_NAME="vpn_connection"
 
 # Enable associative arrays for easy tput colors
 declare -A fg
@@ -112,7 +113,7 @@ select_vpn_server() {
         echo "No selection made. Aborted..."
         exit 1
     fi
-    
+
     export connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s '$EXC_IP_RANGE' connect '$seldomain'"
 }
 
@@ -204,7 +205,12 @@ check_required_files() {
   fi
 
   if [[ ! -f "$AUTOSTARTSH" ]]; then
-    echo -e "${bold}${fg[red]}❌ Error:${reset}${bold}${fg[white]} No vpnautostart.sh found! Expected path: $AUTOSTARTSH${reset}"
+    echo -e "${bold}${fg[red]}❌ Error:${reset}${bold}${fg[white]} No vpn_autostart.sh found! Expected path: $AUTOSTARTSH${reset}"
+    missing=1
+  fi
+
+  if [[ ! -f "$VPNCONNECTOR" ]]; then
+    echo -e "${bold}${fg[red]}❌ Error:${reset}${bold}${fg[white]} No vpn_connector.sh found! Expected path: $VPNCONNECTOR${reset}"
     missing=1
   fi
 
@@ -230,15 +236,30 @@ start_new_session_and_connect() {
             echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to truncate recent_vpn_con.log.${reset}"
             return 1
         }
-        screen -L -Logfile "$SCRIPT_DIR/recent_vpn_con.log" -dmS "$SESSION_NAME" bash -c "$connection" || {
-            echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to start detached screen session '$SESSION_NAME'.${reset}"
+        screen -L -Logfile "$SCRIPT_DIR/recent_vpn_con.log" -dmS "$SESSION_NAME" bash -c "$VPNCONNECTOR" || {
+            echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to start vpn_connector.sh and/or detached screen session '$SESSION_NAME'.${reset}"
             return 1
         }
-        echo -e "${bold}\n⚕️${fg[green]} INFO:${fg[white]} Establishing connection to server '$fzfselect'\n\nDetached screen session with the name 'vpn_connection' will be running in the background.\nTo view the output, simply rerun the script.\nIt's safe to close the terminal now!\n${reset}"
+        echo -e "${bold}\n⚕️${fg[green]} INFO:${fg[white]} Establishing connection to server '$fzfselect'\n\nDetached screen session with the name 'vpn_connection' will be running in the background.\nTo view the output, simply rerun the script or take a look at '$SCRIPT_DIR/recent_vpn_con.log'.\nIt's safe to close the terminal now!\n${reset}"
         echo -e "${bold}${fg[green]}Bye... (｡◕‿‿◕｡)${reset}\n"
         sleep 3
     fi
 }
+
+connector_autostart() {
+    # Reset log
+    truncate -s 0 "$SCRIPT_DIR/recent_vpn_con.log" || {
+        echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to truncate recent_vpn_con.log.${reset}"
+        return 1
+    }
+
+    # Run connector script with autostart option in a detached screen session with logging
+    screen -L -Logfile "$SCRIPT_DIR/recent_vpn_con.log" -dmS "$SESSION_NAME" bash -c "$VPNCONNECTOR --syslaunch" || {
+        echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to start vpn_connector.sh and/or detached screen session '$SESSION_NAME'.${reset}"
+        return 1
+    }
+}
+
 
 # Function: Change working dir to excute the hide.me binary
 execdir() {
