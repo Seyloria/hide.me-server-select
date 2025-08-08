@@ -40,6 +40,7 @@ curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/c
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpn_select.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/vpn_connector.sh
 curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/serverlist.csv
+curl -O  https://raw.githubusercontent.com/Seyloria/hide.me-server-select/main/autostart-server.txt
 ```
 <br/>
 
@@ -88,7 +89,7 @@ You may wish to set up a VPN connection when starting up your system.
 There are multiple ways to achieve this, depending on your distro and/or desktop environment.
 Here is a basic way as an example:
 > Run the **vpn_select.sh** with the **--autostart** flag and choose a new Autostart VPN Server.
-> To invoke the correct startup behavior the **vpn_select.sh** is launched with the **--syslaunch** flag. An example desktop entry for GNOME can be found in the [Autostart directory](/Autostart/).
+> To invoke the correct startup behavior, the **vpn_select.sh** needs to be launched with the **--syslaunch** flag via your distro's autostart mechanism. An example desktop entry for GNOME can be found in the [Autostart directory](/Autostart/).
 <br/>
 <br/>
 
