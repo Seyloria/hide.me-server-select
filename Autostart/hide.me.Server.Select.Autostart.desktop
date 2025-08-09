@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=3.0
+Name=Hide.me Server Select Autostart
+Comment=Starts a Hide.me VPN Connection on system login
+
+Exec=/home/your_username/your_dir/vpn_select.sh --syslaunch
+TryExec=/home/your_username/your_dir/vpn_select.sh
+Terminal=false
+NoDisplay=false
+Categories=Utility;Network
