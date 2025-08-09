@@ -17,7 +17,7 @@ There is no need for systemd as it only uses the basic hide.me CLI client, which
 <br/>
 
 ## :beginner: Features & How It Works
-Thx to [fzf](https://github.com/junegunn/fzf) you get a pretty and filterable list of all the hide.me servers to choose from. With the help of [GNU Screen](https://www.gnu.org/software/screen/), the script can run in the background without the need for an open terminal.
+Thx to [fzf](https://github.com/junegunn/fzf) you get a pretty and filterable list of all the hide.me servers to choose from. With the help of [GNU Screen](https://www.gnu.org/software/screen/), the script can run in the background without the need for an open terminal. You can even set a new [Autostart Server](#autostart) which starts the VPN Connection on session login.
 <br/>
 
 ![Showcase](/showcase.gif)
@@ -59,14 +59,15 @@ Edit the this variable at the top of the **<ins>config.sh</ins>**
 <br/>
 
 ### :key: Making the script work without manual sudo escalation
-Changing the VPN connection via the hide.me CLI Client requires sudo privileges.
-Therefor, the CLI Client needs to be added to the sudoers file with the NOPASSWD option.
-Type **'sudo visudo'** and add the following line somewhere near the end of the file(don't forget to replace your username!):
+Changing the VPN connection via the hide.me CLI Client and the **cp** command inside the vpn_connector.sh require sudo privileges.
+Therefor, the CLI Client and the exact **cp** command need to be added to the sudoers file with the NOPASSWD option.
+Type **'sudo visudo'** and add the following lines somewhere near the end of the file(don't forget to replace your username!):
 ```
 sudo visudo
 ```
 ```
 your_username ALL=(ALL:ALL) NOPASSWD: /opt/hide.me/hide.me
+your_username ALL=(ALL:ALL) NOPASSWD: /bin/cp /opt/hide.me/resolv_backup.conf /etc/resolv.conf
 ```
 :warning: Be careful to not mess up this file, otherwhise you might brick your user permissions!
 <br/>
@@ -95,6 +96,7 @@ Here is a basic way as an example:
 
 ## :scroll: Changelog and current state (dd-mm-yyyy)
 
+- [x] 09-08-2025 | v3.0 | The broken CLI Client behavior for the resolv.conf writeback on system shutdown/restart/logout has been fixed. There are no known issues atm and the tool now is more or less finished.
 - [x] 07-08-2025 | v2.5 | Another Major rewrite to incorporate less files and make autostart more reliable.
 - [x] 05-08-2025 | v2.2 | Basic Autostart works. Tested only on GNOME so far
 - [x] 05-08-2025 | v2.0 | Major rewrite to incorporate a config file
@@ -103,8 +105,7 @@ Here is a basic way as an example:
 <br/>
 
 ## :construction: In the works
-- Atm the hide.me CLI client sometimese fails to to write back the resolv.conf on session logout(system restart). Goal is to run the established connection screen session from a seperate script that traps the session logout.
-- If you have any wishes or ideas, please let me know!
+- [x] Nothing atm, the tool is more or less finished. If you have any wishes or ideas, please let me know!
 <br/>
 
 ---
