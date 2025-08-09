@@ -220,13 +220,13 @@ write_backup_resolv_conf() {
 
     if [[ -f "$backup_file" ]]; then
         if sudo cp "$backup_file" /etc/resolv.conf; then
-            echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]}/etc/resolv.conf overwritten successfully from $backup_file\n${reset}"
+            echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} /etc/resolv.conf overwritten successfully from $backup_file\n${reset}"
         else
-            echo -e "${bold}${fg[red]}\n❌ ERROR:${fg[white]}Failed to overwrite /etc/resolv.conf\n${reset}"
+            echo -e "${bold}${fg[red]}\n❌ ERROR:${fg[white]} Failed to overwrite /etc/resolv.conf\n${reset}"
             return 1
         fi
     else
-        echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]}No backup file found at: $backup_file\n${reset}"
+        echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} No backup file found at: $backup_file\n${reset}"
         return 1
     fi
 }
