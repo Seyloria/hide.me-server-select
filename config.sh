@@ -64,7 +64,7 @@ EOF
 )
 
 # Programm Info like author, version info and project url
-proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 2.5 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
+proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 3.0 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
 
 #Function: Checks for a already running screen session
 check_and_attach_screen_session() {
@@ -212,6 +212,23 @@ check_required_files() {
   if [[ $missing -eq 1 ]]; then
     exit 1
   fi
+}
+
+# Function: Checks if there is a backup_resolv.conf and writes it back on syslaunch
+write_backup_resolv_conf() {
+    local backup_file="/opt/hide.me/resolv_backup.conf"
+
+    if [[ -f "$backup_file" ]]; then
+        if sudo cp "$backup_file" /etc/resolv.conf; then
+            echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]}/etc/resolv.conf overwritten successfully from $backup_file\n${reset}"
+        else
+            echo -e "${bold}${fg[red]}\n❌ ERROR:${fg[white]}Failed to overwrite /etc/resolv.conf\n${reset}"
+            return 1
+        fi
+    else
+        echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]}No backup file found at: $backup_file\n${reset}"
+        return 1
+    fi
 }
 
 # Function: Establishes the connection
