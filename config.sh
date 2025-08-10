@@ -64,7 +64,7 @@ EOF
 )
 
 # Programm Info like author, version info and project url
-proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 3.0 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
+proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 4.0 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
 
 #Function: Checks for a already running screen session
 check_and_attach_screen_session() {
@@ -415,7 +415,6 @@ connector_autostart() {
         return 1
     }
 }
-
 
 # Function: Change working dir to excute the hide.me binary
 execdir() {
