@@ -11,7 +11,7 @@
 ```
 <br/>
 
-This small linux bash script lets you easily switch the hide.me VPN Server by making use of the official [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
+This small linux bash script lets you easily switch the hide.me VPN Server by making use of the [Official hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux).
 There is no need for systemd as it only uses the basic hide.me CLI client, which makes it possible to run on any distro the client itself is compatible with.
 <br/>
 <br/>
@@ -25,8 +25,8 @@ Thx to [fzf](https://github.com/junegunn/fzf) you get a pretty and filterable li
 <br/>
 
 ## :dna: Dependencies
-In addition to the [official Hide.me client](https://github.com/eventure/hide.client.linux) you only need two small and common tools, both of which are available in practically any distro.
-- [Hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux)
+In addition to the [Official hide.me client](https://github.com/eventure/hide.client.linux) you only need two small and common tools, both of which are available in practically any distro.
+- [hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux)
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [fzf](https://github.com/junegunn/fzf)
 - Optional: A type of [Nerd Font](https://www.nerdfonts.com/) is recommended to avoid broken characters and symbols.
@@ -73,9 +73,19 @@ your_username ALL=(ALL:ALL) NOPASSWD: /bin/cp /opt/hide.me/resolv_backup.conf /e
 <br/>
 <br/>
 
+### :rocket: Autostart
+From version >= 4.0 on the autostart feature should be used no matter a autostart server is set or not.
+This ensures that the resolv.conf gets correctly written back on syslaunch, otherwise you might end up with broken dns resolution.(This is a flaw in the [Official hide.me CLI VPN client for Linux](https://github.com/eventure/hide.client.linux) not this script!)
+There are multiple ways to set the autostart, depending on your distro and/or desktop environment.
+Here is a basic way as an example:
+> In CLI run the **vpn_select.sh** with the **--autostart** flag and choose a new Autostart VPN Server.
+> To invoke the correct startup behavior, the **vpn_select.sh** needs to be launched with the **--syslaunch** flag via your distro's autostart mechanism. An example desktop entry for GNOME can be found in the [Autostart directory](/Autostart/). Other distro's may have their own unique mechanism.
+<br/>
+<br/>
+
 ## :link: Optional Settings
 
-### Shortcut via alias
+### :heavy_equals_sign: Shortcut via alias
 Additionally you can add the following line to your .bashrc, .zshrc or config.fish:
 ```sh
 alias vpn="~/path-to-your-script-inside_your_home_directory/vpn_select.sh"
@@ -85,17 +95,9 @@ Afterwards you can call the script by simply typing "vpn" into your terminal, no
 <br/>
 <br/>
 
-### Autostart
-You may wish to set up a VPN connection when starting up your system.
-There are multiple ways to achieve this, depending on your distro and/or desktop environment.
-Here is a basic way as an example:
-> Run the **vpn_select.sh** with the **--autostart** flag and choose a new Autostart VPN Server.
-> To invoke the correct startup behavior, the **vpn_select.sh** needs to be launched with the **--syslaunch** flag via your distro's autostart mechanism. An example desktop entry for GNOME can be found in the [Autostart directory](/Autostart/).
-<br/>
-<br/>
-
 ## :scroll: Changelog and current state (dd-mm-yyyy)
 
+- [x] 10-08-2025 | v4.0 | Rewrite now with a fancy selection menu. resolv.conf issue now completely fixed. Everyone should use the vpn_select.sh --syslaunch by now, even if no autostart server is set. This keeps the resolv.conf writeback working correctly.
 - [x] 09-08-2025 | v3.0 | The broken CLI Client behavior for the resolv.conf writeback on system shutdown/restart/logout has been fixed. There are no known issues atm and the tool now is more or less finished.
 - [x] 07-08-2025 | v2.5 | Another Major rewrite to incorporate less files and make autostart more reliable.
 - [x] 05-08-2025 | v2.2 | Basic Autostart works. Tested only on GNOME so far
