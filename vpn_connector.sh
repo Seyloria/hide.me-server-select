@@ -23,10 +23,16 @@ autostart_connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s '$EXC_I
 
 # Start connection and run in background of the script screen session so SIGTERM can be caught and is not blocked by the foreground running vpn connection
 if [[ "$1" == "--syslaunch" ]]; then
-    write_backup_resolv_conf
-    eval "$autostart_connection"
-    echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} Starting connection to server: $AUTOSTART_SERVER ($AUTOSTART_SERVER_DOMAIN)\n${reset}"
+    # Check if autostart-server.txt exists and is not empty
+    if [[ -s "$AUTOSTARTTXT" ]]; then
+        write_backup_resolv_conf
+        echo -e "${bold}${fg[green]}\n⚕️ Info:${fg[white]} Starting connection to server: $AUTOSTART_SERVER ($AUTOSTART_SERVER_DOMAIN)\n${reset}"
+        eval "$autostart_connection"
+    else
+        write_backup_resolv_conf
+        echo -e "${bold}${fg[yellow]}\n⚕️ Info:${fg[white]} Autostart Server not set. Skipping Autostart Connection\n${reset}"
+    fi
 else
-    eval "$connection"
     echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} Starting connection to server: $fzfselect ($seldomain)\n${reset}"
+    eval "$connection"
 fi

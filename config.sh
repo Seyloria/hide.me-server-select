@@ -80,43 +80,6 @@ check_and_attach_screen_session() {
   fi
 }
 
-# Function: Server Selection via fzf
-select_vpn_server() {
-    # Arrays to store the csv data
-    servernames=()
-    domains=()
-
-    # Reads each line in the csv and saves the servernames and domains into arrays
-    while IFS=";" read -r servername domain; do
-        servernames+=("$servername")
-        domains+=("$domain")
-    done < "$SERVERSCSV"
-
-    # Lets the user select the server(first column) from the serverlist.csv
-    fzfselect=$(cut -d';' -f1 $SERVERSCSV | fzf \
-        --color="header:green,prompt:green,fg+:magenta:bold" \
-        --header="Please select a VPN server" \
-        --prompt="Filter ⧐ " \
-        --height=40% \
-        --layout=reverse \
-        --border)
-
-    # If user made a selection
-    if [ -n "$fzfselect" ]; then
-        # Extract the second column of the matching row - the corresponding domain
-        seldomain=$(awk -F';' -v servername="$fzfselect" '$1 == servername { print $2 }' $SERVERSCSV)
-        echo -e "${bold}${fg[magenta]}󰒒 Selected Server:${fg[white]} $fzfselect${reset}"
-        echo -e "${bold}${fg[magenta]}󰇗 Server Domain:${fg[white]}   $seldomain${reset}"
-        export seldomain
-        export fzfselect
-    else
-        echo "No selection made. Aborted..."
-        exit 1
-    fi
-
-    export connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s '$EXC_IP_RANGE' connect '$seldomain'"
-}
-
 # Function: Autostart Server Selection via fzf
 select_autostart_vpn_server() {
     # Arrays to store the csv data
@@ -148,7 +111,7 @@ select_autostart_vpn_server() {
         export seldomain
         export fzfselect
     else
-        echo "No selection made. Aborted..."
+        echo -e "${bold}🚪${fg[yellow]} Info:${fg[white]}No selection made. Aborted...${reset}"
         exit 1
     fi
 }
@@ -158,12 +121,76 @@ old_autostart_txt() {
     # Read the first and second lines of the autostart file
     read AUTOSTART_SERVER < <(sed -n '1p' "$AUTOSTARTTXT")
     read AUTOSTART_SERVER_DOMAIN < <(sed -n '2p' "$AUTOSTARTTXT")
-
-    # Display the values with formatting
-    echo -e "${bold}${fg[magenta]}${uline}Current VPN Autostart Server Selection${reset}"
-    echo -e "${bold}${fg[magenta]}󰒒 VPN Autostart Server:${fg[white]}        $AUTOSTART_SERVER${reset}"
-    echo -e "${bold}${fg[magenta]}󰇗 VPN Autostart Server Domain:${fg[white]} $AUTOSTART_SERVER_DOMAIN\n\n${reset}"
+    if [[ -s "$AUTOSTARTTXT" ]]; then
+        read AUTOSTART_SERVER < <(sed -n '1p' "$AUTOSTARTTXT")
+        read AUTOSTART_SERVER_DOMAIN < <(sed -n '2p' "$AUTOSTARTTXT")
+        # Display the values with formatting
+        echo -e "${bold}${fg[magenta]}${uline}Current VPN Autostart Server Selection${reset}"
+        echo -e "${bold}${fg[magenta]}󰒒 VPN Autostart Server:${fg[white]}        $AUTOSTART_SERVER${reset}"
+        echo -e "${bold}${fg[magenta]}󰇗 VPN Autostart Server Domain:${fg[white]} $AUTOSTART_SERVER_DOMAIN\n\n${reset}"
+    else
+        echo -e "${bold}${fg[magenta]}${uline}Current VPN Autostart Server Selection${reset}"
+        echo -e "${bold}${fg[magenta]}󰒒 VPN Autostart Server:${fg[white]}        None${reset}"
+        echo -e "${bold}${fg[magenta]}󰇗 VPN Autostart Server Domain:${fg[white]} None\n\n${reset}"
+    fi
+    
 }
+
+autostart_select() {
+    # Build menu options array
+    options=(
+        "Select New VPN Autostart Server"
+        "Exit"
+    )
+
+    # Add 'Disable VPN Autostart' only if file exists and is non-empty
+    if [[ -s "$AUTOSTARTTXT" ]]; then
+        # Insert 'Disable VPN Autostart' before Exit
+        options=(
+            "Select New VPN Autostart Server"
+            "Disable VPN Autostart"
+            "Exit"
+        )
+    fi
+    
+    choice=$(
+        printf "%s\n" \
+            "${options[@]}" |
+        fzf --height=10% \
+            --color="header:green,prompt:green,fg+:magenta:bold" \
+            --reverse \
+            --border \
+            --no-info \
+            --disabled \
+            --prompt '' \
+            --bind "change:clear-query"
+    )
+
+    if [[ -z "$choice" ]]; then
+        echo -e "${bold}🚪${fg[yellow]} Info:${fg[white]}No selection made. Aborted...${reset}"
+        exit 1
+    fi
+
+    case "$choice" in
+        "Select New VPN Autostart Server")
+            select_autostart_vpn_server
+            new_autostart_txt
+            ;;
+        "Disable VPN Autostart")
+            if truncate -s 0 "$AUTOSTARTTXT"; then
+                echo -e "${bold}${fg[green]}⚕️ INFO:${fg[white]} Disabled VPN Autostart Server and cleared '$AUTOSTARTTXT'\n${reset}"
+            else
+                echo "❌ Error: Failed to truncate and clear '$AUTOSTARTTXT'"
+                exit 1
+            fi
+            ;;
+        "Exit")
+            echo -e "${bold}🚪${fg[yellow]} Exit:${fg[green]} Bye... (｡◕‿‿◕｡)\n${reset}"
+            exit 0
+            ;;
+    esac
+}
+
 
 # Function: New Autostart Server write and ending message
 new_autostart_txt() {
@@ -231,19 +258,124 @@ write_backup_resolv_conf() {
     fi
 }
 
+vpnserver_select() {
+    while true; do
+        # Build menu options array
+        options=("Select New VPN Server Connection" "Exit")
+
+        # Add extra options if screen session is active
+        if screen -list | grep -q "\.${SESSION_NAME}"; then
+            options=(
+                "Terminate current VPN Server Connection"
+                "See current VPN Server Connection log"
+                "Select New VPN Server Connection"
+                "Exit"
+            )
+        fi
+        
+        choice=$(
+            printf "%s\n" "${options[@]}" |
+            fzf --height=10% \
+                --color="header:green,prompt:green,fg+:magenta:bold" \
+                --reverse \
+                --border \
+                --no-info \
+                --disabled \
+                --prompt '' \
+                --bind "change:clear-query"
+        )
+
+        if [[ -z "$choice" ]]; then
+            echo -e "${bold}🚪${fg[yellow]} Info:${fg[white]} No selection made. Aborted...${reset}"
+            exit 1
+        fi
+
+        case "$choice" in
+            "Terminate current VPN Server Connection")
+                screen -S "$SESSION_NAME" -X stuff $'\003'
+                echo -e "${bold}🚪${fg[yellow]} Exit:${fg[green]} VPN connection terminating...${reset}"
+            
+                # Wait until the session disappears
+                while screen -list | grep -q "\.${SESSION_NAME}"; do
+                    sleep 0.2
+                done
+            
+                echo -e "${bold}✅${fg[green]} Termination complete. Returning to menu...${reset}"
+                ;;
+            "See current VPN Server Connection log")
+                cat "$SCRIPT_DIR/recent_vpn_con.log"
+                ;;
+            "Select New VPN Server Connection")
+                select_vpn_server
+                start_new_session_and_connect
+                break
+                ;;
+            "Exit")
+                echo -e "${bold}🚪${fg[yellow]} Exit:${fg[green]} Bye... (｡◕‿‿◕｡)\n${reset}"
+                break  # Exit the loop
+                ;;
+        esac
+    done
+}
+
+# Function: Server Selection via fzf
+select_vpn_server() {
+    # Arrays to store the csv data
+    servernames=()
+    domains=()
+
+    # Reads each line in the csv and saves the servernames and domains into arrays
+    while IFS=";" read -r servername domain; do
+        servernames+=("$servername")
+        domains+=("$domain")
+    done < "$SERVERSCSV"
+
+    # Lets the user select the server(first column) from the serverlist.csv
+    fzfselect=$(cut -d';' -f1 $SERVERSCSV | fzf \
+        --color="header:green,prompt:green,fg+:magenta:bold" \
+        --header="Please select a VPN server" \
+        --prompt="Filter ⧐ " \
+        --height=40% \
+        --layout=reverse \
+        --border)
+
+    # If user made a selection
+    if [ -n "$fzfselect" ]; then
+        # Extract the second column of the matching row - the corresponding domain
+        seldomain=$(awk -F';' -v servername="$fzfselect" '$1 == servername { print $2 }' $SERVERSCSV)
+        echo -e "${bold}${fg[magenta]}\n󰒒 Selected Server:${fg[white]} $fzfselect${reset}"
+        echo -e "${bold}${fg[magenta]}󰇗 Server Domain:${fg[white]}   $seldomain\n${reset}"
+        export seldomain
+        export fzfselect
+    else
+        echo "No selection made. Aborted..."
+        exit 1
+    fi
+
+    export connection="sudo /opt/hide.me/hide.me -b resolv_backup.conf -s '$EXC_IP_RANGE' connect '$seldomain'"
+}
+
 # Function: Establishes the connection
 start_new_session_and_connect() {
     if screen -list | grep -q "\.${SESSION_NAME}"; then
-        echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} Running detached VPN connection session detected! Attaching to running screen session '$SESSION_NAME'...\n${reset}"
-        echo -e "${bold}${fg[white]}         To get back out of the session screen again press ${fg[red]}Ctrl+A + D${reset}"
-        echo -e "${bold}${fg[white]}         To kill the current VPN connection press ${fg[red]}Ctrl+C\n${reset}"
-        sleep 5
-        screen -r "$SESSION_NAME"
-        if [[ $? -ne 0 ]]; then
-            echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to attach to screen session '$SESSION_NAME'.${reset}"
-            return 1
+        echo -e "${bold}${fg[green]}⚕️ INFO:${fg[white]} Running detached VPN connection session detected!${reset}"
+        echo -e "${bold}${fg[white]}         Killing running VPN Connection in screen session '$SESSION_NAME'${reset}"
+        screen -S "$SESSION_NAME" -X stuff $'\003'
+        timeout=10
+        elapsed=0
+        
+        while screen -list | grep -q "\.${SESSION_NAME}"; do
+            if (( elapsed >= timeout )); then
+                echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Timeout reached: screen session '$SESSION_NAME' is still running.\n plz terminate manually!${reset}"
+                break
+            fi
+            sleep 1
+            ((elapsed++))
+        done
+        
+        if (( elapsed < timeout )); then
+            echo -e "${bold}${fg[white]}         Screen session '$SESSION_NAME' has ended\n${reset}"
         fi
-    else
         truncate -s 0 "$SCRIPT_DIR/recent_vpn_con.log" || {
             echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to truncate recent_vpn_con.log.${reset}"
             return 1
@@ -252,7 +384,19 @@ start_new_session_and_connect() {
             echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to start vpn_connector.sh and/or detached screen session '$SESSION_NAME'.${reset}"
             return 1
         }
-        echo -e "${bold}\n⚕️${fg[green]} INFO:${fg[white]} Establishing connection to server '$fzfselect'\n\nDetached screen session with the name 'vpn_connection' will be running in the background.\nTo view the output, simply rerun the script or take a look at '$SCRIPT_DIR/recent_vpn_con.log'.\nIt's safe to close the terminal now!\n${reset}"
+        echo -e "${bold}${fg[green]}⚕️ INFO:${fg[white]} Establishing connection to server '$fzfselect'\n\nBackground VPN Connection now running in a detached screen session named 'vpn_connection'\nIt's safe to close the terminal now!\n${reset}"
+        echo -e "${bold}${fg[green]}Bye... (｡◕‿‿◕｡)${reset}\n"
+        sleep 3
+    else
+        truncate -s 0 "$SCRIPT_DIR/recent_vpn_con.log" || {
+            echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to truncate recent_vpn_con.log${reset}"
+            return 1
+        }
+        screen -L -Logfile "$SCRIPT_DIR/recent_vpn_con.log" -dmS "$SESSION_NAME" bash -c "$VPNCONNECTOR" || {
+            echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Failed to start vpn_connector.sh and/or detached screen session '$SESSION_NAME'${reset}"
+            return 1
+        }
+        echo -e "${bold}${fg[green]}⚕️ INFO:${fg[white]} Establishing connection to server '$fzfselect'\n\nBackground VPN Connection now running in a detached screen session named 'vpn_connection'\nIt's safe to close the terminal now!\n${reset}"
         echo -e "${bold}${fg[green]}Bye... (｡◕‿‿◕｡)${reset}\n"
         sleep 3
     fi

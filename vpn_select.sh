@@ -27,13 +27,13 @@ echo -e "$proginfo"
 if [[ "$1" == "--autostart" ]]; then
     echo -e "${bold}${fg[red]}Autostart VPN Server Selection\n${reset}"
     old_autostart_txt
-    select_autostart_vpn_server
-    new_autostart_txt
+    autostart_select
 elif [[ "$1" == "--syslaunch" ]]; then
     echo -e "${bold}${fg[green]}\n⚕️ INFO:${fg[white]} Starting vpn_connector.sh with --syslaunch flag in detached screen session${reset}"
     connector_autostart
 else
-    check_and_attach_screen_session
-    select_vpn_server
-    start_new_session_and_connect
+    vpnserver_select
+    # check_and_attach_screen_session
+    # select_vpn_server
+    # start_new_session_and_connect
 fi
