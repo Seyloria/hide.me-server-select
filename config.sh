@@ -283,7 +283,7 @@ write_backup_resolv_conf() {
 vpnserver_select() {
     while true; do
         # Build menu options array
-        options=("Select New VPN Server Connection" "Exit")
+        options=("Select new VPN Server connection" "Exit")
 
         # Add extra options if screen session is active
         if screen -list | grep -q "\.${SESSION_NAME}"; then
