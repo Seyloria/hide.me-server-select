@@ -12,6 +12,7 @@ else
 fi
 
 # Checks if all required files are in place
+check_dependencies
 check_required_files
 
 # Changes the script working directory

@@ -64,7 +64,7 @@ EOF
 )
 
 # Programm Info like author, version info and project url
-proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 4.0 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
+proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 4.2 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
 
 #Function: Checks for a already running screen session
 check_and_attach_screen_session() {
@@ -163,6 +163,7 @@ autostart_select() {
             --no-info \
             --disabled \
             --prompt '' \
+            --header=$'\n(✿◠‿◠)  Please select an option  (◕‿◕✿)\n\n' \
             --bind "change:clear-query"
     )
 
@@ -217,6 +218,26 @@ new_autostart_txt() {
     echo -e "${bold}${fg[green]}\nBye... (｡◕‿‿◕｡)${reset}\n"
 }
 
+# Function: Check for script dependencies
+check_dependencies() {
+    local deps=("screen" "fzf")
+    local missing=()
+
+    for dep in "${deps[@]}"; do
+        if ! command -v "$dep" >/dev/null 2>&1; then
+            missing+=("$dep")
+        fi
+    done
+
+    if (( ${#missing[@]} > 0 )); then
+        echo -e "${bold}${fg[red]}❌ Error:${fg[white]} Missing dependencies: ${fg[red]}${missing[*]}${reset}"
+        echo -e "${bold}${fg[white]}          Please install them before running this script${reset}"
+        echo -e "${bold}\n🚪${fg[red]}  Exit:${fg[white]} Bye... ${fg[red]}( ✜︵✜ )\n${reset}"
+        exit 1
+    fi
+}
+
+
 # Function: Checks if all required files are in place
 check_required_files() {
   local missing=0
@@ -237,6 +258,7 @@ check_required_files() {
   fi
 
   if [[ $missing -eq 1 ]]; then
+    echo -e "${bold}\n🚪${fg[red]}  Exit:${fg[white]} Bye... ${fg[red]}( ✜︵✜ )\n${reset}"
     exit 1
   fi
 }
@@ -266,9 +288,9 @@ vpnserver_select() {
         # Add extra options if screen session is active
         if screen -list | grep -q "\.${SESSION_NAME}"; then
             options=(
-                "Terminate current VPN Server Connection"
-                "See current VPN Server Connection log"
-                "Select New VPN Server Connection"
+                "Terminate current VPN Server connection"
+                "See current VPN Server connection log"
+                "Select new VPN Server connection"
                 "Exit"
             )
         fi
@@ -282,6 +304,7 @@ vpnserver_select() {
                 --no-info \
                 --disabled \
                 --prompt '' \
+                --header=$'\n(✿◠‿◠)  Please select an option  (◕‿◕✿)\n\n' \
                 --bind "change:clear-query"
         )
 
@@ -291,7 +314,7 @@ vpnserver_select() {
         fi
 
         case "$choice" in
-            "Terminate current VPN Server Connection")
+            "Terminate current VPN Server connection")
                 screen -S "$SESSION_NAME" -X stuff $'\003'
                 echo -e "${bold}🚪${fg[yellow]} Exit:${fg[green]} VPN connection terminating...${reset}"
             
@@ -302,10 +325,19 @@ vpnserver_select() {
             
                 echo -e "${bold}✅${fg[green]} Termination complete. Returning to menu...${reset}"
                 ;;
-            "See current VPN Server Connection log")
-                cat "$SCRIPT_DIR/recent_vpn_con.log"
+            "See current VPN Server connection log")
+                bash -c "tr -d '\r' < '$SCRIPT_DIR/recent_vpn_con.log' | \
+                    fzf --ansi \
+                        --no-info \
+                        --border \
+                        --layout=reverse \
+                        --height=60% \
+                        --prompt='Search log ⧐ ' \
+                        --header 'Press CTRL+C, Ctrl+Q or Escape to return to menu' \
+                        --color="header:green,prompt:green,fg+:magenta:bold" \
+                        --preview-window=follow"
                 ;;
-            "Select New VPN Server Connection")
+            "Select new VPN Server connection")
                 select_vpn_server
                 start_new_session_and_connect
                 break
