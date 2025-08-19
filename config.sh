@@ -66,20 +66,6 @@ EOF
 # Programm Info like author, version info and project url
 proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 4.2 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
 
-#Function: Checks for a already running screen session
-check_and_attach_screen_session() {
-  # Check if the screen session exists
-  if screen -list | grep -q "\.${SESSION_NAME}"; then
-      echo -e "${bold}${fg[green]}⚕️ INFO:${fg[white]} Running detached VPN connection session detected! Attaching to running screen session '$SESSION_NAME'...\n${reset}"
-      echo -e "${bold}${fg[white]}         To get back out of the session screen again press ${fg[red]}Ctrl+A + D${reset}"
-      echo -e "${bold}${fg[white]}         To kill the current VPN connection press ${fg[red]}Ctrl+C\n${reset}"
-      sleep 5
-      screen -r "$SESSION_NAME"
-  else
-      echo -e "${bold}${fg[white]}⚕️${fg[magenta]} INFO:${fg[white]} No running VPN connection in detached session named '$SESSION_NAME' found.${reset}\n"
-  fi
-}
-
 # Function: Autostart Server Selection via fzf
 select_autostart_vpn_server() {
     # Arrays to store the csv data

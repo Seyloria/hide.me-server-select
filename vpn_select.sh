@@ -34,7 +34,4 @@ elif [[ "$1" == "--syslaunch" ]]; then
     connector_autostart
 else
     vpnserver_select
-    # check_and_attach_screen_session
-    # select_vpn_server
-    # start_new_session_and_connect
 fi
