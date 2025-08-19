@@ -97,6 +97,7 @@ Afterwards you can call the script by simply typing **`vpn`** into your terminal
 
 ## :scroll: Changelog and current state (dd-mm-yyyy)
 
+- [x] 11-08-2025 | v4.3 | Small code and comment cleanup
 - [x] 11-08-2025 | v4.2 | Watching current log is now searchable and made the menu fancier
 - [x] 10-08-2025 | v4.0 | Rewrite now with a fancy selection menu. resolv.conf issue now completely fixed. Everyone should use the vpn_select.sh --syslaunch by now, even if no autostart server is set. This keeps the resolv.conf writeback working correctly.
 - [x] 09-08-2025 | v3.0 | The broken CLI Client behavior for the resolv.conf writeback on system shutdown/restart/logout has been fixed. There are no known issues atm and the tool now is more or less finished.
