@@ -64,7 +64,7 @@ EOF
 )
 
 # Programm Info like author, version info and project url
-proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 4.2 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
+proginfo="${bold}${fg[magenta]}\nwritten by Seyloria | Version 4.3 | https://github.com/Seyloria/hide.me-server-select\n${reset}"
 
 # Function: Autostart Server Selection via fzf
 select_autostart_vpn_server() {
